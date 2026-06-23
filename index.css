@@ -1,0 +1,422 @@
+/* =====================================================
+   AEDIVIX — Global Styles
+   Production-level CSS with Keyframe Animations
+   ===================================================== */
+
+/* ── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Color Tokens */
+  --clr-bg:          #050510;
+  --clr-surface:     rgba(255,255,255,0.04);
+  --clr-surface-md:  rgba(255,255,255,0.08);
+  --clr-border:      rgba(255,255,255,0.10);
+  --clr-border-glow: rgba(99,102,241,0.35);
+
+  --clr-primary:     #6366f1;
+  --clr-primary-lt:  #818cf8;
+  --clr-accent:      #38bdf8;
+  --clr-text:        #f1f5f9;
+  --clr-muted:       #94a3b8;
+  --clr-dim:         #475569;
+
+  /* Gradients */
+  --grad-primary: linear-gradient(135deg, #6366f1 0%, #38bdf8 100%);
+  --grad-glow:    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.25), transparent);
+  --grad-glass:   linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+
+  /* Typography */
+  --ff-display: 'Space Grotesk', sans-serif;
+  --ff-body:    'Inter', sans-serif;
+
+  /* Spacing Scale */
+  --sp-xs:  0.25rem;
+  --sp-sm:  0.5rem;
+  --sp-md:  1rem;
+  --sp-lg:  1.5rem;
+  --sp-xl:  2.5rem;
+  --sp-2xl: 4rem;
+  --sp-3xl: 6rem;
+
+  /* Transitions */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring:cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast:   150ms;
+  --dur-med:    300ms;
+  --dur-slow:   600ms;
+
+  /* Radius */
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  20px;
+  --r-pill:9999px;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--ff-body);
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Video Background Layer ───────────────────────── */
+.video-bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.video-bg-layer video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.05);
+}
+
+/* Multi-layer overlay for readability */
+.video-bg-layer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom,
+      rgba(5,5,16,0.55) 0%,
+      rgba(5,5,16,0.40) 40%,
+      rgba(5,5,16,0.55) 80%,
+      rgba(5,5,16,0.80) 100%
+    ),
+    var(--grad-glow);
+  pointer-events: none;
+}
+
+/* Fallback gradient when no video */
+.video-bg-fallback {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 90% 60% at 20% 20%, rgba(99,102,241,0.15), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 80% 80%, rgba(56,189,248,0.10), transparent 60%),
+    linear-gradient(160deg, #050510 0%, #0d0d2b 50%, #050510 100%);
+}
+
+/* ── App Shell ────────────────────────────────────── */
+#root {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Scrollbar ────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--clr-bg); }
+::-webkit-scrollbar-thumb {
+  background: var(--clr-primary);
+  border-radius: var(--r-pill);
+}
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+
+/* Fade Up — page entry for content blocks */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade In — simple opacity */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Slide In Left */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Slide In Right */
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale In — for cards and modals */
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Glow Pulse — for accent elements */
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(99,102,241,0.3),
+      0 0 60px rgba(99,102,241,0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(99,102,241,0.5),
+      0 0 100px rgba(99,102,241,0.2);
+  }
+}
+
+/* Text Glow Pulse */
+@keyframes textGlowPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 20px rgba(99,102,241,0.4),
+      0 0 40px rgba(99,102,241,0.15);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(99,102,241,0.7),
+      0 0 80px rgba(56,189,248,0.25);
+  }
+}
+
+/* Shimmer — loading/highlight effect */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+
+/* Float — ambient floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+/* Rotate Slow — for decorative elements */
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Gradient Shift — for animated gradient borders */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Nav Item Stagger */
+@keyframes navStagger {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Page Transition — wipe in */
+@keyframes pageWipeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0px);
+  }
+}
+
+/* Noise grain overlay (optional cinematic feel) */
+@keyframes grain {
+  0%  { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(2%, 1%); }
+  30% { transform: translate(-1%, 2%); }
+  40% { transform: translate(3%, -1%); }
+  50% { transform: translate(-1%, 3%); }
+  60% { transform: translate(2%, -2%); }
+  70% { transform: translate(-3%, 1%); }
+  80% { transform: translate(1%, -1%); }
+  90% { transform: translate(-2%, 2%); }
+  100%{ transform: translate(0, 0); }
+}
+
+/* Border Trace — animated border */
+@keyframes borderTrace {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0% 0 0); }
+}
+
+/* Utility Animation Classes */
+.anim-fadeUp    { animation: fadeUp    var(--dur-slow) var(--ease-out) both; }
+.anim-fadeIn    { animation: fadeIn    var(--dur-med)  var(--ease-out) both; }
+.anim-slideLeft { animation: slideInLeft var(--dur-slow) var(--ease-out) both; }
+.anim-slideRight{ animation: slideInRight var(--dur-slow) var(--ease-out) both; }
+.anim-scaleIn   { animation: scaleIn   var(--dur-slow) var(--ease-out) both; }
+.anim-float     { animation: float 4s ease-in-out infinite; }
+
+/* Stagger delays */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+.delay-600 { animation-delay: 600ms; }
+.delay-700 { animation-delay: 700ms; }
+.delay-800 { animation-delay: 800ms; }
+
+/* ── Page Transition Wrapper ──────────────────────── */
+.page-enter {
+  animation: pageWipeIn 0.55s var(--ease-out) both;
+}
+
+/* ── Glass Card ───────────────────────────────────── */
+.glass {
+  background: var(--grad-glass);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--r-lg);
+}
+
+.glass-hover {
+  transition: background var(--dur-med) var(--ease-out),
+              border-color var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out),
+              transform var(--dur-med) var(--ease-out);
+}
+.glass-hover:hover {
+  background: linear-gradient(135deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%);
+  border-color: var(--clr-border-glow);
+  box-shadow:
+    0 0 30px rgba(99,102,241,0.12),
+    0 20px 60px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+}
+
+/* ── Gradient Text ────────────────────────────────── */
+.grad-text {
+  background: var(--grad-primary);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: gradientShift 4s ease infinite;
+}
+
+/* ── Shimmer Button ───────────────────────────────── */
+.btn-shimmer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255,255,255,0.15) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+  border-radius: inherit;
+}
+.btn-shimmer:hover::before {
+  opacity: 1;
+  animation: shimmer 0.8s linear;
+}
+
+/* ── Section Utilities ────────────────────────────── */
+.section-pad {
+  padding: var(--sp-3xl) var(--sp-xl);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--sp-xl);
+}
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-sm);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--clr-primary-lt);
+  padding: var(--sp-xs) var(--sp-md);
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: var(--r-pill);
+  margin-bottom: var(--sp-lg);
+}
+
+/* ── Reduced Motion ───────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --sp-3xl: 4rem;
+    --sp-2xl: 2.5rem;
+    --sp-xl:  1.5rem;
+  }
+  .section-pad {
+    padding: var(--sp-2xl) var(--sp-lg);
+  }
+}

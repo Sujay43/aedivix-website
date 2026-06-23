@@ -1,0 +1,209 @@
+/* ── Perks Grid ─────────────────────────────────── */
+.perks-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+}
+
+.perk-card {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.perk-card__icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 14px;
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.perk-card__title {
+  font-family: var(--ff-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.perk-card__desc {
+  font-size: 0.87rem;
+  color: var(--clr-muted);
+  line-height: 1.6;
+}
+
+/* ── Jobs Grid ──────────────────────────────────── */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.job-card {
+  padding: 1.75rem 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.job-card__title {
+  font-family: var(--ff-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.job-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.job-card__meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+  color: var(--clr-muted);
+}
+
+.job-card__meta-item svg {
+  flex-shrink: 0;
+  color: var(--clr-primary-lt);
+}
+
+.job-card__skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.skill-tag {
+  padding: 0.22rem 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--clr-primary-lt);
+  background: rgba(99,102,241,0.12);
+  border: 1px solid rgba(99,102,241,0.25);
+  border-radius: var(--r-pill);
+}
+
+/* ── Application Form ───────────────────────────── */
+.apply-form-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.apply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* Resume Upload dropzone */
+.resume-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.75rem 1rem;
+  border: 1.5px dashed rgba(99,102,241,0.35);
+  border-radius: var(--r-md);
+  background: rgba(99,102,241,0.04);
+  cursor: pointer;
+  transition:
+    border-color var(--dur-med) ease,
+    background   var(--dur-med) ease;
+  text-align: center;
+}
+
+.resume-upload:hover {
+  border-color: var(--clr-primary);
+  background: rgba(99,102,241,0.08);
+}
+
+.resume-upload span {
+  font-size: 0.92rem;
+  color: var(--clr-text);
+  font-weight: 500;
+}
+
+.resume-upload__hint {
+  font-size: 0.78rem !important;
+  color: var(--clr-muted) !important;
+  font-weight: 400 !important;
+}
+
+/* Submit button */
+.apply-submit {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--grad-primary);
+  border: none;
+  border-radius: var(--r-pill);
+  cursor: pointer;
+  transition:
+    transform  0.25s cubic-bezier(0.34,1.56,0.64,1),
+    box-shadow 0.25s ease,
+    filter     0.25s ease;
+  margin-top: 0.5rem;
+}
+
+.apply-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 35px rgba(99,102,241,0.45);
+  filter: brightness(1.08);
+}
+
+/* Success state */
+.apply-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  padding: 3rem 1rem;
+}
+
+.apply-success h3 {
+  font-family: var(--ff-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.apply-success p {
+  font-size: 0.95rem;
+  color: var(--clr-muted);
+  max-width: 420px;
+  line-height: 1.65;
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media (max-width: 960px) {
+  .perks-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .perks-grid  { grid-template-columns: 1fr; }
+  .jobs-grid   { grid-template-columns: 1fr; }
+  .apply-form-wrap { padding: 1.5rem 1rem; }
+}

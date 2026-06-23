@@ -1,0 +1,168 @@
+/* ── Animated Background — no video file needed ──────
+   Mimics the GetLayers dark cinematic look using:
+   - Deep space base gradient
+   - 4 floating color orbs with keyframe drift
+   - Film grain texture via SVG filter
+   - Subtle vignette fade
+   ─────────────────────────────────────────────────── */
+
+/* Keyframes for orb drift */
+@keyframes orbDrift1 {
+  0%   { transform: translate(0, 0)    scale(1);    opacity: 0.55; }
+  33%  { transform: translate(6%, 4%)  scale(1.08); opacity: 0.65; }
+  66%  { transform: translate(-4%, 8%) scale(0.95); opacity: 0.50; }
+  100% { transform: translate(0, 0)    scale(1);    opacity: 0.55; }
+}
+
+@keyframes orbDrift2 {
+  0%   { transform: translate(0, 0)     scale(1);    opacity: 0.45; }
+  40%  { transform: translate(-8%, -5%) scale(1.12); opacity: 0.60; }
+  70%  { transform: translate(5%, -3%)  scale(0.90); opacity: 0.40; }
+  100% { transform: translate(0, 0)     scale(1);    opacity: 0.45; }
+}
+
+@keyframes orbDrift3 {
+  0%   { transform: translate(0, 0)    scale(1);    opacity: 0.35; }
+  50%  { transform: translate(4%, -6%) scale(1.15); opacity: 0.50; }
+  100% { transform: translate(0, 0)    scale(1);    opacity: 0.35; }
+}
+
+@keyframes orbDrift4 {
+  0%   { transform: translate(0, 0)      scale(1);    opacity: 0.30; }
+  30%  { transform: translate(-5%, 6%)   scale(1.10); opacity: 0.45; }
+  70%  { transform: translate(3%, -4%)   scale(0.92); opacity: 0.25; }
+  100% { transform: translate(0, 0)      scale(1);    opacity: 0.30; }
+}
+
+@keyframes grainShift {
+  0%,100% { transform: translate(0,0); }
+  10%  { transform: translate(-2%, -3%); }
+  20%  { transform: translate(2%, 1%); }
+  30%  { transform: translate(-1%, 2%); }
+  40%  { transform: translate(3%, -1%); }
+  50%  { transform: translate(-1%, 3%); }
+  60%  { transform: translate(2%, -2%); }
+  70%  { transform: translate(-3%, 1%); }
+  80%  { transform: translate(1%, -1%); }
+  90%  { transform: translate(-2%, 2%); }
+}
+
+/* ── Shell ────────────────────────────────────────── */
+.vbg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* ── Base ─────────────────────────────────────────── */
+.vbg__base {
+  position: absolute;
+  inset: 0;
+  background:
+    /* top-left cool dark blue */
+    radial-gradient(ellipse 80% 60% at -10% -10%, #0b0b2e 0%, transparent 65%),
+    /* bottom-right slightly lighter */
+    radial-gradient(ellipse 80% 60% at 110% 110%, #0a0a1f 0%, transparent 65%),
+    /* solid near-black base */
+    #050510;
+}
+
+/* ── Orbs ─────────────────────────────────────────── */
+.vbg__orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform, opacity;
+}
+
+/* Indigo orb — top left */
+.vbg__orb--1 {
+  width: 70vw;
+  height: 70vw;
+  top: -25%;
+  left: -15%;
+  background: radial-gradient(ellipse at center,
+    rgba(99, 102, 241, 0.40) 0%,
+    rgba(79, 70, 229, 0.20) 40%,
+    transparent 70%
+  );
+  animation: orbDrift1 18s ease-in-out infinite;
+}
+
+/* Cyan orb — bottom right */
+.vbg__orb--2 {
+  width: 65vw;
+  height: 65vw;
+  bottom: -20%;
+  right: -10%;
+  background: radial-gradient(ellipse at center,
+    rgba(56, 189, 248, 0.30) 0%,
+    rgba(14, 165, 233, 0.15) 40%,
+    transparent 70%
+  );
+  animation: orbDrift2 22s ease-in-out infinite;
+}
+
+/* Purple orb — center */
+.vbg__orb--3 {
+  width: 55vw;
+  height: 55vw;
+  top: 20%;
+  left: 30%;
+  background: radial-gradient(ellipse at center,
+    rgba(139, 92, 246, 0.22) 0%,
+    rgba(109, 40, 217, 0.10) 45%,
+    transparent 70%
+  );
+  animation: orbDrift3 26s ease-in-out infinite;
+}
+
+/* Blue orb — top right accent */
+.vbg__orb--4 {
+  width: 45vw;
+  height: 45vw;
+  top: -5%;
+  right: 5%;
+  background: radial-gradient(ellipse at center,
+    rgba(59, 130, 246, 0.20) 0%,
+    rgba(37, 99, 235, 0.08) 50%,
+    transparent 70%
+  );
+  animation: orbDrift4 20s ease-in-out infinite;
+}
+
+/* ── Film Grain (SVG filter) ──────────────────────── */
+.vbg__grain {
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  opacity: 0.035;
+  animation: grainShift 0.18s steps(1) infinite;
+
+  /* Inline SVG noise filter as background */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+
+/* ── Vignette + bottom fade ───────────────────────── */
+.vbg__fade {
+  position: absolute;
+  inset: 0;
+  background:
+    /* radial vignette */
+    radial-gradient(ellipse 100% 100% at 50% 50%,
+      transparent 50%,
+      rgba(5, 5, 16, 0.55) 100%
+    ),
+    /* bottom darkening for text legibility */
+    linear-gradient(to bottom,
+      transparent 0%,
+      transparent 50%,
+      rgba(5, 5, 16, 0.50) 85%,
+      rgba(5, 5, 16, 0.80) 100%
+    );
+}
